@@ -1,0 +1,19 @@
+A Node.js application with a classic Hello World message. Minimum content necessary to run on IBM Bluemix / Cloud Foundry deployment.
+
+$ cf target api.ng.bluemix.net
+$ cf login <IBM ID>
+$ cf push --command 'node main.js'
+
+
+
+[1] https://ace.ng.bluemix.net/docs/index.jsp
+[2] http://www.nodejs.org
+[3] http://docs.cloudfoundry.com
+[4] https://help.github.com/articles/set-up-git
+[5] https://ace.ng.bluemix.net/docs/QuickStart.jsp
+[6] http://docs.cloudfoundry.com/docs/common/install_ruby.html
+[7] https://ace.ng.bluemix.net/docs/QuickStart.jsp#install-cf
+[8] https://ace.ng.bluemix.net/docs/QuickStart.jsp#connect-bluemix
+[9] https://ace.ng.bluemix.net/docs/QuickStart.jsp#login-bluemix
+[10] http://docs.cloudfoundry.com/docs/using/deploying-apps/manifest.html#attributes
+[11] http://www.yaml.org
