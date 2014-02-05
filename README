@@ -1,19 +1,36 @@
-A Node.js application with a classic Hello World message. Minimum content necessary to run on IBM Bluemix / Cloud Foundry deployment.
+GIT Local Build
+ased on the jenkinsaasBuildHook project, I've successfully setup the personal build for jenkinsaas project. 
 
-$ cf target api.ng.bluemix.net
-$ cf login <IBM ID>
-$ cf push --command 'node main.js'
+To leverage personal build, you need to create a branch. You may want to do so when you are working on some complex code, like a feature. 
 
+You will first create a branch and then repeatably do git add, commit and push on it. Branch pushes will trigger the personal dev build, if successful then personal staging build. These builds do the same testing as original dev and staging build except they pull down branch code and notify only the committer upon any failure.
 
+Once you've done modifying your code, you can merge the branch back to master then push changes to master.
 
-[1] https://ace.ng.bluemix.net/docs/index.jsp
-[2] http://www.nodejs.org
-[3] http://docs.cloudfoundry.com
-[4] https://help.github.com/articles/set-up-git
-[5] https://ace.ng.bluemix.net/docs/QuickStart.jsp
-[6] http://docs.cloudfoundry.com/docs/common/install_ruby.html
-[7] https://ace.ng.bluemix.net/docs/QuickStart.jsp#install-cf
-[8] https://ace.ng.bluemix.net/docs/QuickStart.jsp#connect-bluemix
-[9] https://ace.ng.bluemix.net/docs/QuickStart.jsp#login-bluemix
-[10] http://docs.cloudfoundry.com/docs/using/deploying-apps/manifest.html#attributes
-[11] http://www.yaml.org
+One limitation right now is that personal build and normal staging build are using same bluemix project jenkinsaasdev and jenkinsaasdevgreen. We'd better create one set of bluemix app for each developer in future.
+
+Git command flow
+// Start to work on a feature, pick a branch name like feature_x
+git checkout -b feature_x                      // create the branch
+git add
+git commit
+......                                         // several git add, git commit
+git push --set-upstream origin feature_x       // need to setup upstream branch once, 
+                                               //push will trigger JenkinsaasDevelopmentBuild_Personal
+
+git add                                        // some more edits and push
+git commit
+git push 
+
+// once you think you have all your code ready, and get a successful personal build
+git checkout master
+git merge feature_x                            // merge changes back to master. Auto merge is not always working,
+                                               // might need some manual merge
+git push                                       // push to master. Master dev and staging build will run
+
+// Optional: delete branch if no longer needed
+git branch -d feature_x                       // remove the local one
+git push origin --delete feature_x            // remove the remote one
+
+Tip
+A very useful Git guide: http://rogerdudler.github.io/git-guide/
